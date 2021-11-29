@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server-Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/sidebars.css" rel="stylesheet">
+  <link href="../assets/css/chart.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <nav class="navbar navbar-light bg-white">
+      <span class="navbar-brand mb-0 h1"></span>
+    </nav>
+    <div class="row">
+      <div class="flex-shrink-0 p-3 bg-white" style="width: 220px;">
+        <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+          <svg class="bi me-2" width="30" height="24">
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+          <span class="fs-5 fw-semibold">Server-Dashboard</span>
+        </a>
+        <ul class="list-unstyled ps-0">
+          <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+              data-bs-target="#home-collapse" aria-expanded="true"> Dashboard </button>
+            <div class="collapse show" id="home-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="/" class="link-dark rounded">Status</a></li>
+                <li><a href="../Dashboard/cpu.html" class="link-dark rounded">Cpu</a></li>
+                <li><a href="../Dashboard/ram.html" class="link-dark rounded">RAM</a></li>
+                <li><a href="../Dashboard/network.html" class="link-dark rounded">Network</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+              data-bs-target="#dashboard-collapse" aria-expanded="false"> Power </button>
+            <div class="collapse" id="dashboard-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><b><a href="./onoff.html" class="link-dark rounded">on/off</a></b></li>
+              </ul>
+            </div>
+          </li>
+          <li class="border-top my-3"></li>
+          <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+              data-bs-target="#account-collapse" aria-expanded="false"> None </button>
+            <div class="collapse" id="account-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>전원버튼</h3>
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="button" style="height: 60px;">ON</button>
+                <button class="btn btn-danger" type="button" style="height: 60px;">OFF</button>
+              </div>
+          </div>
+          <div class="col-md-6">
+            <h3>현재서버 전원 상황</h3>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-4">
+                    <i class="bi  bi-check-circle" style="font-size: 700%; color: green;"></i>
+                  </div>
+                  <div class="col-md-4"></div>
+                </div>
+              </div>            
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mt-3">
+            <h3>연결테스트</h3>
+            <div class="table-responsive">
+              <table class="table ">
+                <thead>
+                  <tr>
+                    <th>Testcase</th>
+                    <th>ping m/s</th>
+                    <th>result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>10</td>
+                    <td>check!</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>8</td>
+                    <td>check!</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>8</td>
+                    <td>check!</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>8</td>
+                    <td>check!</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button type="button" class="btn btn-primary">테스트하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>
