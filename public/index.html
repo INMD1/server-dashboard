@@ -1,101 +1,17 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Server-Dashboard</title>
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/css/sidebars.css" rel="stylesheet" />
-    <link href="assets/css/chart.css" rel="stylesheet" />
-</head>
-
-<body>
-    <div class="container-fluid">
-        <nav class="navbar navbar-light bg-white">
-            <span class="navbar-brand mb-0 h1"></span>
-        </nav>
-        <div class="row">
-            <div class="flex-shrink-0 p-3 bg-white" style="width: 220px;">
-                <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                    <svg class="bi me-2" width="30" height="24">
-                        <use xlink:href="#bootstrap" />
-                    </svg>
-                    <span class="fs-5 fw-semibold">Server-Dashboard</span>
-                </a>
-                <ul class="list-unstyled ps-0">
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#home-collapse" aria-expanded="true">
-                            Dashboard
-                        </button>
-                        <div class="collapse show" id="home-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><b><a href="/" class="link-dark rounded">Status</a></b></li>
-                                <li><a href="./Dashboard/cpu.html" class="link-dark rounded">Cpu</a></li>
-                                <li><a href="./Dashboard/ram.html" class="link-dark rounded">RAM</a></li>
-                                <li><a href="./Dashboard/network.html" class="link-dark rounded">Network</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#dashboard-collapse" aria-expanded="false">
-                            Power
-                        </button>
-                        <div class="collapse" id="dashboard-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="./power/onoff.html" class="link-dark rounded">on/off</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="border-top my-3"></li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#account-collapse" aria-expanded="false">
-                            None
-                        </button>
-                        <div class="collapse" id="account-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-8">
-                <div class="row">
-                    <div class="col-5">
-                        <div class="p-3">
-                            <h1 style="text-align: left">CPU</h1>
-                            <canvas class="col" id="cpuchart"></canvas>
-                            <br>
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <div class="p-3">
-                            <h1 style="text-align: left">RAM</h1>
-                            <canvas class="col" id="ramchart"></canvas>
-                            <br>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <h1 style="text-align: left">Network</h1>
-                    <div class="col-6">
-                        <canvas id="myChart"></canvas>
-                    </div>
-                    <div class="col-6">
-                    <canvas id="myChart1"></canvas>
-                    </div>
-                </div>
-                <br>
-            </div>
-        </div>
-    </div>
-
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="text/javascript" src="./assets/js/index.js"></script>
-</body>
-
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
 </html>
