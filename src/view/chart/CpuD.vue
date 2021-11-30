@@ -29,11 +29,7 @@ export default {
   },
   mounted() {
     this.fillData();
-  },
-  data() {
-    return {
-      myChart: null,
-    };
+    
   },
 };
 </script>

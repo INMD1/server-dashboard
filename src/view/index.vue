@@ -27,18 +27,22 @@
 </template>
 
 <script >
-import cpustatus from "./chart/CpuD.vue"
-import axios from "axios"
+import cpustatus from "./chart/CpuD.vue";
+import axios from 'axios';
 
 export default {
   name: 'App',
   components: {
     cpustatus
   },
-  methods: {
-    const json = axios.get("http://113.198.229.165/test");
-    console.
+  data() {
+    return{
+      cpusage: 0
+    };
+  },
+  async mounted () {
+    const jsondata = await axios.get('http://113.198.229.165:9090/test')
+    this.cpustatus = jsondata.data.cpu.usage  
   }
-
 }
 </script>
