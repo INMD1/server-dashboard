@@ -1,4 +1,6 @@
 # server-dashboard
+디자인 개발 완료<br>
+https://powerinmd.me/server-dashobard-dev/serdash1/
 
 ## Project setup
 ```
