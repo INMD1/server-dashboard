@@ -3,15 +3,14 @@
     <div class="col-5">
       <div class="p-3">
         <h1 style="text-align: left">CPU</h1>
-        <cpustatus :Cpu="cpusage" ></cpustatus>
-        <br />
+        <cpustatus :chartdata="chartData" ref="cpustatus" />
       </div>
     </div>
     <div class="col-5">
       <div class="p-3">
         <h1 style="text-align: left">RAM</h1>
         <canvas class="col" id="ramchart"></canvas>
-        <br/>
+        <br />
       </div>
     </div>
   </div>
@@ -26,21 +25,29 @@
   </div>
 </template>
 
-<script >
+<script>
 import cpustatus from "./chart/CpuD.vue";
-import axios from 'axios';
+import axios from "axios";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    cpustatus
+    cpustatus,
   },
-    data() {
-    return{
-      cpusage: 0
+  data() {
+    return {
+      chartData: [],
+      chartOptions: [],
     };
   },
-   mounted () {
-    const jsondata = await axios.get('http://113.198.229.165:9090/test')
+  async mounted() {
+    const getdata = await axios.get("http://113.198.229.165:9090/test");
+    setInterval(() => {
+      let num = getdata.data.cpu.usage;
+      this.chartData[0] = num;
+      this.chartData[1] = 100 - num;
+      console.log(this.chartData);
+      this.$refs.cpustatus.mounted();
+    }, 3000);
   },
-}
+};
 </script>
