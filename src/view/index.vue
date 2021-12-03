@@ -3,7 +3,7 @@
     <div class="col-5">
       <div class="p-3">
         <h1 style="text-align: left">CPU</h1>
-        <cpustatus :chartdata="chartData" ref="cpustatus" />
+        <cpustatus :chartdata="chartData" :timer="timer" ref="cpustatus" />
       </div>
     </div>
     <div class="col-5">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import cpustatus from "./chart/CpuD.vue";
+import cpustatus from "./chart/CpuD";
 import axios from "axios";
 export default {
   name: "App",
@@ -37,17 +37,19 @@ export default {
     return {
       chartData: [],
       chartOptions: [],
+      timer : 0
     };
   },
   async mounted() {
-    const getdata = await axios.get("http://113.198.229.165:9090/test");
-    setInterval(() => {
+    this.timer = 50
+    setInterval(async () => {
+      const getdata = await axios.get("http://113.198.229.165:9090/test");
       let num = getdata.data.cpu.usage;
       this.chartData[0] = num;
-      this.chartData[1] = 100 - num;
-      console.log(this.chartData);
-      this.$refs.cpustatus.mounted();
-    }, 3000);
+      this.chartData[1] = 100 - num;     
+      console.log(this.chartData);  
+      this.$refs.cpustatus.outchange();
+   },5000);
   },
 };
 </script>

@@ -1,45 +1,66 @@
 <template>
-<canvas class="col" id="cpuchart"></canvas>
+  <canvas class="col" id="cpuchart"></canvas>
 </template>
 <script>
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
-
 export default {
   name: "cpustatus",
   components: {},
   props: {
     chartdata: {
       type: Object,
-      default: null
+      default: null,
+    },
+    timer: {
+      type: Number,
     },
     options: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
+  },
+  data() {
+      return {
+        json : []
+      }
   },
   methods: {
     fillData() {
       const ctx = document.getElementById("cpuchart");
-      this.myChart = new Chart(ctx, {
+
+      const cpuconfig = {
         type: "doughnut",
         data: {
           labels: ["Uase", "Free"],
           datasets: [
             {
               label: "reception",
-              data: [ this.chartdata[0], this.chartdata[1]],
+              data: [0, 100],
               backgroundColor: ["rgb(255, 205, 86)", "rgb(255, 99, 132)"],
               borderColor: ["rgba(153, 102, 255, 0.2)"],
               borderWidth: 1,
             },
           ],
         },
-      });
+      };
+
+      this.cpuchart = new Chart(ctx, cpuconfig);
+      this.json = cpuconfig;
     },
-    mounted() {
-    this.fillData().update();
+    change() {
+      const data1 = this.json.data.datasets[0].data;
+      data1[0] = this.chartdata[0];
+      data1[1] = this.chartdata[1];
+      this.cpuchart.update();
+      console.log(this.timer);
+    },
+    outchange(){
+      this.change();
+    },
   },
+  mounted() {
+    this.fillData();
   },
 };
 </script>
