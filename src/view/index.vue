@@ -3,41 +3,42 @@
     <div class="col-5">
       <div class="p-3">
         <h1 style="text-align: left">CPU</h1>
-        <cpustatus :chartdata="chartData" :timer="timer" ref="cpustatus" />
+        <cpustatus :cpudata="cpudata" ref="cpustatus" />
       </div>
     </div>
     <div class="col-5">
       <div class="p-3">
         <h1 style="text-align: left">RAM</h1>
-        <canvas class="col" id="ramchart"></canvas>
+        <ramstatus :Ramchart="Ramchart"  ref="ramstatus" />
         <br />
       </div>
     </div>
   </div>
   <div class="row">
-    <h1 style="text-align: left">Network</h1>
-    <div class="col-6">
-      <canvas id="myChart"></canvas>
-    </div>
-    <div class="col-6">
-      <canvas id="myChart1"></canvas>
-    </div>
+        <networkstatus :networkin="networkin" :networkout="networkout" ref="networkstatus"/>
   </div>
 </template>
 
 <script>
-import cpustatus from "./chart/CpuD";
+import cpustatus from "./main_chart/CpuD.vue";
+import ramstatus from "./main_chart/Ramchart.vue";
+import networkstatus from "./main_chart/networkchart.vue"
+let count = 0;
 import axios from "axios";
 export default {
   name: "App",
   components: {
     cpustatus,
+    ramstatus,
+    networkstatus
   },
   data() {
     return {
-      chartData: [],
+      cpudata: [],
+      Ramchart: [],
+      networkin: [0,0,0,0,0,0],
+      networkout: [0,0,0,0,0,0],
       chartOptions: [],
-      timer : 0
     };
   },
   async mounted() {
@@ -45,10 +46,36 @@ export default {
     setInterval(async () => {
       const getdata = await axios.get("http://113.198.229.165:9090/test");
       let num = getdata.data.cpu.usage;
-      this.chartData[0] = num;
-      this.chartData[1] = 100 - num;     
-      console.log(this.chartData);  
-      this.$refs.cpustatus.outchange();
+      //cpudata_전처리
+      this.cpudata[0] = num;
+      this.cpudata[1] = 100 - num;     
+
+      // Ramdata_전처리
+      let totalMemMb = getdata.data.ram.totalMemMb;
+      let usedMemMb = getdata.data.ram.usedMemMb;
+      const persent = (usedMemMb / totalMemMb) * 100;
+      
+      this.Ramchart[0] = persent;
+      this.Ramchart[1] = (100 - persent)
+
+
+    // network 전처리 메인페이지는 토탈로 표시됨
+    let inputMb = getdata.data.netstats.total.inputMb;
+    let outputMb = getdata.data.netstats.total.outputMb
+    if(!(count > 6)){
+      this.networkin[count] = inputMb;
+      this.networkout[count] = outputMb;
+      count ++;
+    }else if(count > 6){
+      count = 0;
+      this.networkin[count] = inputMb;
+      this.networkout[count] = outputMb;
+      count ++;
+    }
+    this.$refs.cpustatus.outchange();
+    this.$refs.networkstatus.outchange();
+    this.$refs.ramstatus.outchange();
+
    },5000);
   },
 };
