@@ -21,7 +21,7 @@
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <div v-html="htmlReturningFn"></div>                                
                                 <li><a href="/" class="link-dark rounded">Status</a></li>
-                                <li><a href="/dash/cpu" class="link-dark rounded">Cpu</a></li>
+                                <li><a href="/more/cpu" class="link-dark rounded">Cpu</a></li>
                                 <li><a href="./Dashboard/ram.html" class="link-dark rounded">RAM</a></li>
                                 <li><a href="./Dashboard/network.html" class="link-dark rounded">Network</a></li>
                             </ul>
