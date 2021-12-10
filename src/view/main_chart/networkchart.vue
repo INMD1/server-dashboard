@@ -40,7 +40,7 @@ export default {
       const networkconfig = {
         type: "line",
         data: {
-          labels: ["1", "2", "3", "4", "5", "6"],
+          labels: ["5s", "10s", "15s", "20s", "25s", "30s"],
           datasets: [
             {
               label: "input",
@@ -62,7 +62,7 @@ export default {
       const networkgetconfig = {
         type: "line",
         data: {
-          labels: ["1", "2", "3", "4", "5", "6"],
+          labels: ["5s", "10s", "15s", "20s", "25s", "30s"],
           datasets: [
             {
               label: "output",

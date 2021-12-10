@@ -34,7 +34,7 @@ export default {
             {
               label: "reception",
               data: [0, 100],
-              backgroundColor: ["rgb(255, 102, 051)", "rgb(051, 204, 051)"],
+              backgroundColor: ["rgb(49, 119, 212)", "rgb(53, 161, 212)"],
               borderColor: ["rgba(153, 102, 255, 0.2)"],
               borderWidth: 1,
             },

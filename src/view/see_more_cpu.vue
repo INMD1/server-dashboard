@@ -3,6 +3,7 @@
         <div class="container-fluid">
           <div class="row row-cols-sm-2">
             <div class="col-md-3 col-xxl-2">
+              <img :src="require(`../image/intel.png`)" style="border-radius: 10%;" width="80" height="80"/>
             </div>
             <div class="col-md-9 col-xxl-10">
               <h4 class="text-center pt-4">Intel(R) Core(TM) i7-7700 CPU </h4>

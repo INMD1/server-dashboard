@@ -21,6 +21,7 @@
       ref="networkstatus"
     />
   </div>
+  <notifications position="bottom left" />
 </template>
 
 <script>
@@ -30,6 +31,7 @@ import networkstatus from "./main_chart/networkchart.vue";
 
 let count = 0;
 import axios from "axios";
+
 export default {
   name: "App",
   components: {
@@ -47,10 +49,24 @@ export default {
     };
   },
   async mounted() {
-    this.timer = 50;
+    //this.timer = 50;
+    let check = 0;
     setInterval(async () => {
       try {
         const getdata = await axios.get("http://113.198.229.165:9090/test");
+        
+        if (check == 1) {
+          this.$notify({
+            type: "success",
+            title: "서버가 정상적으로 다시연결됨",
+            text:
+              "다시 정상적으로 서버가 연결되었습니다." +
+              "\n\nDate: " +
+              new Date(),
+          });
+          check = 0;
+        }
+
         let num = getdata.data.cpu.usage;
         //cpudata_전처리
         this.cpudata[0] = num;
@@ -81,7 +97,15 @@ export default {
         this.$refs.networkstatus.outchange();
         this.$refs.ramstatus.outchange();
       } catch (error) {
-
+        console.log("test");
+        this.$notify({
+          type: "error",
+          title: "서버 연결에 문제가 생김",
+          text:
+            "현재 서버하고 통신이 안됨니다.\n서버의 상태를 점검해 주십시오." +
+            "\n\nDate: " + new Date(),
+        });
+        check = 1;
       }
     }, 5000);
   },
