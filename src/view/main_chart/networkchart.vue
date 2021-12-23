@@ -23,6 +23,10 @@ export default {
       type: Object,
       default: null,
     },
+    Datetime: {
+      type: Object,
+      default: null
+    },
     options: {
       type: Object,
       default: null,
@@ -40,7 +44,7 @@ export default {
       const networkconfig = {
         type: "line",
         data: {
-          labels: ["5s", "10s", "15s", "20s", "25s", "30s"],
+          labels: ["0", "0", "0", "0", "0", "0"],
           datasets: [
             {
               label: "input",
@@ -62,7 +66,7 @@ export default {
       const networkgetconfig = {
         type: "line",
         data: {
-          labels: ["5s", "10s", "15s", "20s", "25s", "30s"],
+          labels: ["0", "0", "0", "0", "0", "0"],
           datasets: [
             {
               label: "output",
@@ -79,12 +83,13 @@ export default {
       this.outputjson = networkgetconfig;
     },
     change() {
+        this.inputjson.data.labels = this.Datetime;
         this.inputjson.data.datasets[0].data = this.networkin;
         this.inputchart.update();
 
-        this.outputjson.data.datasets[0].data = this.networkout;
+        this.outputjson.data.labels = this.Datetime;
         this.outputchart.update();
-        console.log(this.networkout);
+        console.log(this.Datetime);
     },
     outchange() {
       this.change();

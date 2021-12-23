@@ -12,7 +12,7 @@
       <div class="row">
         <div class="col-xl-6 mt-4">
           <h3>CPU usage</h3>
-          <canvas id="usage"></canvas>
+          <cpuusage/>
         </div>
         <div class="col-xl-6 mt-4">
           <h3>CPU clock</h3>
@@ -70,11 +70,17 @@
   </div>
 </template>
 <script>
+import cpuusage from "./cpu_chart/cpuusage.vue";
 import axios from "axios";
+let count = 0;
 export default {
   name: "more_cpu",
+  components: {
+    cpuusage
+  },
   data() {
     return {
+      cpudata: [0, 0, 0, 0, 0, 0],
       table: [
         {pid: 0,name: "Null",cpu: 0,},
         {pid: 0,name: "Null",cpu: 0,},
@@ -88,8 +94,16 @@ export default {
     setInterval(async () => {
       const getdata = await axios.get("http://113.198.229.165:9090/test");
       this.table = getdata.data.cpu.proccess;
-      console.log(this.table);
-    }, 1000);
+      if (!(count >= 5)) {
+        this.cpudata[count] = getdata.data.cpu.usage;
+        count++;
+      } else if (count >= 5) {
+        count = 0;
+        this.cpudata[count] = getdata.data.cpu.usage;
+        count++;
+      }
+      console.log(this.cpudata);
+    }, 5000);
   },
 };
 </script>

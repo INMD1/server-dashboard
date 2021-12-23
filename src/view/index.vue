@@ -18,9 +18,13 @@
     <networkstatus
       :networkin="networkin"
       :networkout="networkout"
+      :Datetime="Datetime"
       ref="networkstatus"
     />
   </div>
+  <br>
+  <br>
+  <br>
 </template>
 
 <script>
@@ -44,16 +48,21 @@ export default {
       Ramchart: [],
       networkin: [0, 0, 0, 0, 0, 0],
       networkout: [0, 0, 0, 0, 0, 0],
+      Datetime: [0, 0, 0, 0, 0, 0],
       chartOptions: [],
-    };
+      };
   },
   async mounted() {
     //this.timer = 50;
     setInterval(async () => {
       try {
+        //시간
+        let today = new Date();
+        let gettime = (today.getHours()+":"+today.getMinutes()+":"+today.getSeconds());
         const getdata = await axios.get("http://113.198.229.165:9090/test");
   
         let num = getdata.data.cpu.usage;
+
         //cpudata_전처리
         this.cpudata[0] = num;
         this.cpudata[1] = 100 - num;
@@ -69,12 +78,15 @@ export default {
         // network 전처리 메인페이지는 토탈로 표시됨
         let inputMb = getdata.data.netstats.total.inputMb;
         let outputMb = getdata.data.netstats.total.outputMb;
-        if (!(count > 6)) {
+
+        if (!(count >= 5)) {
+          this.Datetime[count] = gettime;
           this.networkin[count] = inputMb;
           this.networkout[count] = outputMb;
           count++;
-        } else if (count > 6) {
+        } else if (count >= 5) {
           count = 0;
+          this.Datetime[count] = gettime;
           this.networkin[count] = inputMb;
           this.networkout[count] = outputMb;
           count++;
@@ -83,7 +95,7 @@ export default {
         this.$refs.networkstatus.outchange();
         this.$refs.ramstatus.outchange();
       } catch (error) {
-        console.log("ERRROR");
+        console.log(error);
       }
     }, 5000);
   },
