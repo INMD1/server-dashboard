@@ -36,7 +36,7 @@ export default {
           labels: [0, 0, 0, 0, 0, 0],
           datasets: [
             {
-              label: "reception",
+              label: "사용량",
               data: [0, 100],
               backgroundColor: ["rgb(144, 203, 251)", "rgb(48, 123, 140)"],
               borderColor: ["rgba(153, 102, 255, 0.2)"],
@@ -52,10 +52,8 @@ export default {
               title: {
                 display: true,
                 text: "시간(HH:MM:SS)",
-                color: "#911",
                 font: {
-                  family: "Comic Sans MS",
-                  size: 10,
+                  size: 15,
                   lineHeight: 1.2,
                 },
                 padding: { top: 20, left: 0, right: 0, bottom: 0 },

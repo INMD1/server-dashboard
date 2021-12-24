@@ -3,10 +3,15 @@
     <div class="container-fluid">
       <div class="row row-cols-sm-2">
         <div class="col-md-3 col-xxl-2">
-          <img :src="require(`../image/intel.png`)" style="border-radius: 10%" width="80" height="80"/>
+          <div v-if="picture == -1">
+              <img :src="require(`../image/intel.png`)" style="border-radius: 10%" width="80" height="80"/>
+          </div>
+          <div v-else>
+              <img :src="require(`../image/amd.png`)" style="border-radius: 10%" width="80" height="80"/>
+          </div>
         </div>
         <div class="col-md-9 col-xxl-10">
-          <h4 class="text-center pt-4">Intel(R) Core(TM) i7-7700 CPU</h4>
+          <h4 class="text-center pt-4">{{ model }}</h4>
         </div>
       </div>
       <div class="row">
@@ -19,8 +24,12 @@
           />
         </div>
         <div class="col-xl-6 mt-4">
-          <h3>CPU clock</h3>
-          <canvas id="clock"></canvas>
+          <h3>CPU clock(Standard thread)</h3>
+          <cpuclock
+          :clock="clock"
+          :clocknum="clocknum"
+          ref="cpuclock"
+          />
         </div>
       </div>
       <div class="row">
@@ -75,33 +84,50 @@
 </template>
 <script>
 import cpuusage from "./see_more_cpu_chart/cpuusage.vue";
+import cpuclock from "./see_more_cpu_chart/cpuclock.vue";
 import axios from "axios";
 let count = 0;
 export default {
   name: "more_cpu",
   components: {
-    cpuusage
+    cpuusage,
+    cpuclock
   },
   data() {
     return {
+      model: "NULL",
+      picture: undefined,
       cpudata: [0, 0, 0, 0, 0, 0],
       Datetime: [0, 0, 0, 0, 0, 0],
+      clock: [],
+      clocknum: [],
       table: [
         {pid: 0,name: "Null",cpu: 0,},
         {pid: 0,name: "Null",cpu: 0,},
         {pid: 0,name: "Null", cpu: 0,},
         {pid: 0,name: "Null", cpu: 0,},
-        {pid: 0,name: "Null", cpu: 8,},
+        {pid: 0,name: "Null", cpu: 0,},
       ],
     };
   },
-  mounted() {
-    setInterval(async () => {
+  async mounted() {
+    const getdata = await axios.get("http://113.198.229.165:9090/test");
+    this.model = getdata.data.cpu.model;
 
+    //이미지 판독
+    this.picture = this.model.indexOf('AMD') && this.model.indexOf('amd');
+
+    //쓰레드 개수 확인
+    for (let index = 0; index < getdata.data.cpu.clock.length; index++) {
+      this.clocknum[index] = index + "thd";
+      this.clock[index] = 0;
+    }
+
+    setInterval(async () => {
+        const getdata = await axios.get("http://113.198.229.165:9090/test");
         let today = new Date();
         let gettime = (today.getHours()+":"+today.getMinutes()+":"+today.getSeconds());
 
-      const getdata = await axios.get("http://113.198.229.165:9090/test");
       this.table = getdata.data.cpu.proccess;
       if (!(count >= 5)) {
         this.cpudata[count] = getdata.data.cpu.usage;
@@ -113,8 +139,15 @@ export default {
         this.Datetime[count] = gettime;
         count++;
       }
+
+      //cpu 클럭 부분
+      for (let index = 0; index < getdata.data.cpu.clock.length; index++) {
+        this.clock[index] = getdata.data.cpu.clock[index].clock;
+      }
+      console.log(this.clock);
+      //반복
       this.$refs.cpustatus.outchange();
-      console.log(this.cpudata);
+      this.$refs.cpuclock.outchange();
     }, 5000);
   },
 };
