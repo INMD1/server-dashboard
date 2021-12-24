@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-8 gy-5">
+  <div class="col-sm-10 gy-5">
     <div class="container-fluid">
       <div class="row row-cols-sm-2">
         <div class="col-md-3 col-xxl-2">
@@ -12,7 +12,11 @@
       <div class="row">
         <div class="col-xl-6 mt-4">
           <h3>CPU usage</h3>
-          <cpuusage/>
+          <cpuusage
+          :cpudata="cpudata"
+          :Datetime="Datetime"
+          ref="cpustatus"
+          />
         </div>
         <div class="col-xl-6 mt-4">
           <h3>CPU clock</h3>
@@ -70,7 +74,7 @@
   </div>
 </template>
 <script>
-import cpuusage from "./cpu_chart/cpuusage.vue";
+import cpuusage from "./see_more_cpu_chart/cpuusage.vue";
 import axios from "axios";
 let count = 0;
 export default {
@@ -81,6 +85,7 @@ export default {
   data() {
     return {
       cpudata: [0, 0, 0, 0, 0, 0],
+      Datetime: [0, 0, 0, 0, 0, 0],
       table: [
         {pid: 0,name: "Null",cpu: 0,},
         {pid: 0,name: "Null",cpu: 0,},
@@ -92,16 +97,23 @@ export default {
   },
   mounted() {
     setInterval(async () => {
+
+        let today = new Date();
+        let gettime = (today.getHours()+":"+today.getMinutes()+":"+today.getSeconds());
+
       const getdata = await axios.get("http://113.198.229.165:9090/test");
       this.table = getdata.data.cpu.proccess;
       if (!(count >= 5)) {
         this.cpudata[count] = getdata.data.cpu.usage;
+        this.Datetime[count] = gettime;
         count++;
       } else if (count >= 5) {
         count = 0;
         this.cpudata[count] = getdata.data.cpu.usage;
+        this.Datetime[count] = gettime;
         count++;
       }
+      this.$refs.cpustatus.outchange();
       console.log(this.cpudata);
     }, 5000);
   },

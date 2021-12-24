@@ -12,6 +12,10 @@ export default {
       type: Object,
       default: null,
     },
+    Datetime: {
+      type: Object,
+      default: null,
+    },
     options: {
       type: Object,
       default: null,
@@ -29,7 +33,7 @@ export default {
       const cpuconfig = {
         type: "line",
         data: {
-          labels: ["Uase", "Free"],
+          labels: [0, 0, 0, 0, 0, 0],
           datasets: [
             {
               label: "reception",
@@ -40,15 +44,33 @@ export default {
             },
           ],
         },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true,
+                text: "시간(HH:MM:SS)",
+                color: "#911",
+                font: {
+                  family: "Comic Sans MS",
+                  size: 10,
+                  lineHeight: 1.2,
+                },
+                padding: { top: 20, left: 0, right: 0, bottom: 0 },
+              },
+            },
+          },
+        },
       };
 
       this.cpuchart = new Chart(ctx, cpuconfig);
       this.json = cpuconfig;
     },
     change() {
-      const data1 = this.json.data.datasets[0].data;
-      data1[0] = this.cpudata[0];
-      data1[1] = this.cpudata[1];
+      this.json.data.datasets[0].data = this.cpudata;
+      this.json.data.labels = this.Datetime;
       this.cpuchart.update();
     },
     outchange() {
