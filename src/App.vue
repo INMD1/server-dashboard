@@ -38,7 +38,7 @@
                 <li><a href="/" class="link-dark rounded">Status</a></li>
                 <li><a href="/more/cpu" class="link-dark rounded">Cpu</a></li>
                 <li>
-                  <a href="./Dashboard/ram.html" class="link-dark rounded"
+                  <a href="/more/ram" class="link-dark rounded"
                     >RAM</a
                   >
                 </li>
