@@ -1,12 +1,12 @@
 <template>
   <div class="row">
-    <div class="col-5">
+    <div class="col-6">
       <div class="p-3">
         <h1 style="text-align: left">CPU</h1>
         <cpustatus :cpudata="cpudata" ref="cpustatus" />
       </div>
     </div>
-    <div class="col-5">
+    <div class="col-6">
       <div class="p-3">
         <h1 style="text-align: left">RAM</h1>
         <ramstatus :Ramchart="Ramchart" ref="ramstatus" />
@@ -59,7 +59,7 @@ export default {
         //시간
         let today = new Date();
         let gettime = (today.getHours()+":"+today.getMinutes()+":"+today.getSeconds());
-        const getdata = await axios.get("http://113.198.229.165:9090/test");
+        const getdata = await axios.get(window.localStorage.getItem("adress"));
   
         let num = getdata.data.cpu.usage;
 
@@ -79,12 +79,12 @@ export default {
         let inputMb = getdata.data.netstats.total.inputMb;
         let outputMb = getdata.data.netstats.total.outputMb;
 
-        if (!(count < 6)) {
+        if (!(count >= 6)) {
           this.Datetime[count] = gettime;
           this.networkin[count] = inputMb;
           this.networkout[count] = outputMb;
           count++;
-        } else if (count < 6) {
+        } else if (count >= 6) {
           count = 0;
           this.Datetime[count] = gettime;
           this.networkin[count] = inputMb;

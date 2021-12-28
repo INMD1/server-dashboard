@@ -7,7 +7,15 @@
       <div class="flex-shrink-0 p-3 bg-white" style="width: 220px">
         <a
           href="/"
-          class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom"
+          class="
+            d-flex
+            align-items-center
+            pb-3
+            mb-3
+            link-dark
+            text-decoration-none
+            border-bottom
+          "
         >
           <svg class="bi me-2" width="30" height="24">
             <use xlink:href="#bootstrap" />
@@ -92,17 +100,18 @@
 
 <script>
 import axios from "axios";
-import fs from "fs";
 export default {
   name: "App",
   components: {},
+  //버튼 활성화 메서드 저장하는 곳
   methods: {
     ipediton() {
       this.$swal({
         title: "변경할 주소 또는 ip 넣어주세요.",
+        text: "참 앞에 http:// 나 https://를 넣어주세요!",
         icon: "question",
         input: "text",
-        inputPlaceholder: "ex)0.0.0.0, example.com",
+        inputPlaceholder: "ex) http://0.0.0.0, http://example.com",
         showCloseButton: true,
         inputValidator: (value) => {
           if (!value) {
@@ -118,11 +127,19 @@ export default {
               confirmButtonText: "YES!",
             }).then((result) => {
               if (result.isConfirmed) {
-                const dataset = { "adress": value};
-                fs.writeFileSync("./assets/json/data.json", dataset);
-                this.$swal("저장완료되었습니다!", "아래에 버튼을 누루면 재부팅이 됨니다.", "success");
-              }else {
-                this.$swal('취소되었습니다.', '아무것도 변경되지 않았습니다.', 'error')
+                window.localStorage.setItem("adress", value);
+                this.$swal(
+                  "저장완료되었습니다!",
+                  "3초뒤에 페이지 리로드 됨니다!",
+                  "success"
+                );
+                setTimeout(() => this.$router.go(), 3000);
+              } else {
+                this.$swal(
+                  "취소되었습니다.",
+                  "아무것도 변경되지 않았습니다.",
+                  "error"
+                );
               }
             });
           }
@@ -130,12 +147,38 @@ export default {
       });
     },
   },
+  //페이지 로드되자 마자 하는 것
   async mounted() {
-    //this.timer = 50;
+    //로컬스토리지에 데이터가 있는지 확인
+    if (window.localStorage.getItem("adress") == null) {
+      this.$swal({
+        title: "안녕하세요!",
+        text: "처음 오시는거 같해요. 아래에 ip나 도메인을 입력해서 저장해주세요!",
+        icon: "info",
+        input: "text",
+        inputPlaceholder: "ex)0.0.0.0, example.com",
+        showCloseButton: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return "아직 데이터가 입력안된거 같해요!";
+          } else {
+            window.localStorage.setItem("adress", value);
+                this.$swal(
+                  "저장완료되었습니다!",
+                  "3초뒤에 페이지 리로드 됨니다!",
+                  "success"
+                );
+            setTimeout(() => this.$router.go(), 3000);
+          }
+        },
+      });
+    }
+
+    //데이터를 5초방식으로 데이터 리로드 함
     let check = 0;
     setInterval(async () => {
       try {
-        await axios.get("http://113.198.229.165:9090/test");
+        await axios.get(window.localStorage.getItem("adress"));
         if (check == 1) {
           this.$notify({
             type: "success",

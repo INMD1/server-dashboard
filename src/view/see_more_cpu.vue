@@ -111,7 +111,7 @@ export default {
     };
   },
   async mounted() {
-    const getdata = await axios.get("http://113.198.229.165:9090/test");
+    const getdata = await axios.get(window.localStorage.getItem("adress"));
     this.model = getdata.data.cpu.model;
 
     //이미지 판독
@@ -124,16 +124,16 @@ export default {
     }
 
     setInterval(async () => {
-        const getdata = await axios.get("http://113.198.229.165:9090/test");
+        const getdata = await axios.get(window.localStorage.getItem("adress"));
         let today = new Date();
         let gettime = (today.getHours()+":"+today.getMinutes()+":"+today.getSeconds());
 
       this.table = getdata.data.cpu.proccess;
-      if (!(count >= 5)) {
+      if (!(count >= 6)) {
         this.cpudata[count] = getdata.data.cpu.usage;
         this.Datetime[count] = gettime;
         count++;
-      } else if (count >= 5) {
+      } else if (count >= 6) {
         count = 0;
         this.cpudata[count] = getdata.data.cpu.usage;
         this.Datetime[count] = gettime;
