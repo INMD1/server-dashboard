@@ -79,12 +79,12 @@ export default {
         let inputMb = getdata.data.netstats.total.inputMb;
         let outputMb = getdata.data.netstats.total.outputMb;
 
-        if (!(count >= 5)) {
+        if (!(count < 6)) {
           this.Datetime[count] = gettime;
           this.networkin[count] = inputMb;
           this.networkout[count] = outputMb;
           count++;
-        } else if (count >= 5) {
+        } else if (count < 6) {
           count = 0;
           this.Datetime[count] = gettime;
           this.networkin[count] = inputMb;

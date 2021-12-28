@@ -66,15 +66,17 @@
             <button
               class="btn btn-toggle align-items-center rounded collapsed"
               data-bs-toggle="collapse"
-              data-bs-target="#account-collapse"
+              data-bs-target="#dashboard-collapse"
               aria-expanded="false"
             >
-              None
+              option
             </button>
-            <div class="collapse" id="account-collapse">
-              <ul
-                class="btn-toggle-nav list-unstyled fw-normal pb-1 small"
-              ></ul>
+            <div class="collapse" id="dashboard-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li>
+                  <a @click="ipediton" class="link-dark rounded">ip_edit</a>
+                </li>
+              </ul>
             </div>
           </li>
         </ul>
@@ -90,11 +92,45 @@
 
 <script>
 import axios from "axios";
-
+import fs from "fs";
 export default {
   name: "App",
   components: {},
-    async mounted() {
+  methods: {
+    ipediton() {
+      this.$swal({
+        title: "변경할 주소 또는 ip 넣어주세요.",
+        icon: "question",
+        input: "text",
+        inputPlaceholder: "ex)0.0.0.0, example.com",
+        showCloseButton: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return "You need to write something!";
+          } else {
+            this.$swal({
+              title: "정말로 변경할건가요?",
+              text: "계속 진행하면 앱을 재부팅이 됨니다.",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "YES!",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                const dataset = { "adress": value};
+                fs.writeFileSync("./assets/json/data.json", dataset);
+                this.$swal("저장완료되었습니다!", "아래에 버튼을 누루면 재부팅이 됨니다.", "success");
+              }else {
+                this.$swal('취소되었습니다.', '아무것도 변경되지 않았습니다.', 'error')
+              }
+            });
+          }
+        },
+      });
+    },
+  },
+  async mounted() {
     //this.timer = 50;
     let check = 0;
     setInterval(async () => {
@@ -118,7 +154,8 @@ export default {
           title: "서버 연결에 문제가 생김",
           text:
             "현재 서버하고 통신이 안됨니다.\n서버의 상태를 점검해 주십시오." +
-            "\n\nDate: " + new Date(),
+            "\n\nDate: " +
+            new Date(),
         });
         check = 1;
       }
@@ -126,5 +163,4 @@ export default {
   },
 };
 </script>
-
 <style></style>
