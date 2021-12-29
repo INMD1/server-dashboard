@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-10 gy-5">
+  <div class="col-sm-8 gy-5">
     <div class="container-fluid">
       <div class="row">
         <h3>total network graph</h3>
@@ -44,19 +44,24 @@ export default {
   data() {
     return {
       tabledata: null,
-      time: [0, 0, 0, 0, 0],
-      inputMb: [0, 0, 0, 0, 0],
-      outputMb: [0, 0, 0, 0, 0],
+      time: [0, 0, 0, 0, 0, 0],
+      inputMb: [0, 0, 0, 0, 0, 0],
+      outputMb: [0, 0, 0, 0, 0, 0],
     };
   },
   mounted() {
     setInterval(async () => {
+      //초기작업
       let today = new Date();
       let gettime =
         today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       const getdata = await axios.get(window.localStorage.getItem("adress"));
+
+      //데이터 넣기
       this.tabledata = getdata.data.netstatus;
       console.log(this.tabledata);
+      
+      //배열 데이터 넣기
       if (!(count >= 6)) {
         this.time[count] = gettime;
         this.inputMb[count] = getdata.data.nettotal.inputMb;

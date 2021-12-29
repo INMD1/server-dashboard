@@ -29,7 +29,6 @@ export default {
   methods: {
     fillData() {
       const ctx = document.getElementById("network");
-
       const netconfig = {
         type: "line",
         data: {

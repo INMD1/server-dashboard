@@ -99,15 +99,18 @@ export default {
   },
   mounted() {
     setInterval(async () => {
+        //초기작업
         let today = new Date();
         let gettime = (today.getHours()+":"+today.getMinutes()+":"+today.getSeconds());
         const getdata = await axios.get(window.localStorage.getItem("adress"));
         
+        //데이터 넣기
         this.totalMemMb = getdata.data.ram.totalMemMb;
         this.usedMemMb = getdata.data.ram.usedMemMb;
         this.freeMemMb = getdata.data.ram.freeMemMb;
         this.time = today;
 
+        //배열 데이터 넣기
         if(!(count >= 6)){
           this.grapharr[count] = getdata.data.ram.usedMemMb;
           this.graphtine[count] = gettime;

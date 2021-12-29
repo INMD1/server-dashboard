@@ -114,7 +114,7 @@ export default {
     const getdata = await axios.get(window.localStorage.getItem("adress"));
     this.model = getdata.data.cpu.model;
 
-    //이미지 판독
+    //CPU모델 판독하기
     this.picture = this.model.indexOf('AMD') && this.model.indexOf('amd');
 
     //쓰레드 개수 확인
