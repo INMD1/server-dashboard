@@ -43,7 +43,7 @@
                   >
                 </li>
                 <li>
-                  <a href="./Dashboard/network.html" class="link-dark rounded"
+                  <a href="/more/network" class="link-dark rounded"
                     >Network</a
                   >
                 </li>
@@ -62,9 +62,8 @@
             <div class="collapse" id="dashboard-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                  <a href="./power/onoff.html" class="link-dark rounded"
-                    >on/off</a
-                  >
+                  <a @click="nonono" class="link-dark rounded">On/off</a>
+
                 </li>
               </ul>
             </div>
@@ -146,6 +145,13 @@ export default {
         },
       });
     },
+    nonono(){
+      this.$swal(
+        "error!",
+        "아직 제작중이에요... 잠시만 기다려주세요!",
+        "error"
+      )
+    }
   },
   //페이지 로드되자 마자 하는 것
   async mounted() {

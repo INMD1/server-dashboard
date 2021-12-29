@@ -66,18 +66,14 @@ export default {
         //cpudata_전처리
         this.cpudata[0] = num;
         this.cpudata[1] = 100 - num;
-
         // Ramdata_전처리
-        let totalMemMb = getdata.data.ram.totalMemMb;
-        let usedMemMb = getdata.data.ram.usedMemMb;
-        const persent = (usedMemMb / totalMemMb) * 100;
 
-        this.Ramchart[0] = persent;
-        this.Ramchart[1] = 100 - persent;
+        this.Ramchart[0] = getdata.data.ram.usedMemPercentage;
+        this.Ramchart[1] = getdata.data.ram.freeMemPercentage;
 
         // network 전처리 메인페이지는 토탈로 표시됨
-        let inputMb = getdata.data.netstats.total.inputMb;
-        let outputMb = getdata.data.netstats.total.outputMb;
+        let inputMb = getdata.data.nettotal.inputMb;
+        let outputMb = getdata.data.nettotal.outputMb;
 
         if (!(count >= 6)) {
           this.Datetime[count] = gettime;
