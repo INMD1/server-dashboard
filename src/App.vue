@@ -178,8 +178,7 @@ export default {
           }
         },
       });
-    }
-
+    }else{
     //데이터를 5초방식으로 데이터 리로드 함
     let check = 0;
     setInterval(async () => {
@@ -209,6 +208,7 @@ export default {
         check = 1;
       }
     }, 5000);
+    }
   },
 };
 </script>
