@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-8 gy-5">
+  <div class="col-sm-10 gy-5">
     <div class="container-fluid">
       <div class="row">
         <h3>total network graph</h3>
