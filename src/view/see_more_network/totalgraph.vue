@@ -37,13 +37,13 @@ export default {
             {
               label: "inputMb",
               data: this.inputMb,
-              backgroundColor: ["rgb(44, 76, 44)"],
+              backgroundColor: ["rgb(150,75,0)"],
               borderWidth: 1,
             },
             {
               label: "outputMb",
               data: this.outputMb,
-              backgroundColor: ["rgb(131, 180, 75)"],
+              backgroundColor: ["rgb(184, 153, 124)"],
               borderWidth: 1,
             },
           ],

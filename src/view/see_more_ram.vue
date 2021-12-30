@@ -2,7 +2,7 @@
   <div class="col-sm-10 gy-5">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-xl-6 mt-4">
+        <div class="col-xl-10 mt-4">
           <h3>Ram usage graph</h3>
           <ramgraph
           :grapharr="grapharr"
@@ -10,7 +10,7 @@
           ref="ramgraph"
           />
         </div>
-        <div class="col-xl-6 mt-4">
+        <div class="col-xl-10 mt-4">
           <h3>Ram usage info</h3>
           <br>
           <div class="row">
@@ -21,53 +21,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col-md-12 mt-4">
-          <h3>Best top5 process</h3>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">pid</th>
-                <th scope="col">Name</th>
-                <th scope="col">Usage (%)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>{{ this.table[0].pid }}</td>
-                <td>{{ this.table[0].name }}</td>
-                <td>{{ this.table[0].cpu.toFixed(3)}}</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>{{ this.table[1].pid }}</td>
-                <td>{{ this.table[1].name }}</td>
-                <td>{{ this.table[1].cpu.toFixed(3)}}</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>{{ this.table[2].pid }}</td>
-                <td>{{ this.table[2].name }}</td>
-                <td>{{ this.table[2].cpu.toFixed(3) }}</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>{{ this.table[3].pid }}</td>
-                <td>{{ this.table[3].name }}</td>
-                <td>{{ this.table[3].cpu.toFixed(3) }}</td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>{{ this.table[4].pid }}</td>
-                <td>{{ this.table[4].name }}</td>
-                <td>{{ this.table[4].cpu.toFixed(3) }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -88,13 +41,6 @@ export default {
       grapharr: [0,0,0,0,0],
       graphtine: [0,0,0,0,0],
       time: null,
-      table: [
-        { pid: 0, name: "Null", cpu: 0 },
-        { pid: 0, name: "Null", cpu: 0 },
-        { pid: 0, name: "Null", cpu: 0 },
-        { pid: 0, name: "Null", cpu: 0 },
-        { pid: 0, name: "Null", cpu: 0 },
-      ],
     };
   },
   mounted() {
@@ -109,7 +55,7 @@ export default {
         this.usedMemMb = getdata.data.ram.usedMemMb;
         this.freeMemMb = getdata.data.ram.freeMemMb;
         this.time = today;
-
+        
         //배열 데이터 넣기
         if(!(count >= 6)){
           this.grapharr[count] = getdata.data.ram.usedMemMb;
