@@ -38,8 +38,8 @@ export default {
             {
               label: "사용량",
               data: [0, 100],
-              backgroundColor: ["rgb(144, 203, 251)", "rgb(48, 123, 140)"],
-              borderColor: ["rgba(153, 102, 255, 0.2)"],
+              backgroundColor: ["rgb(48, 123, 140)"],
+              borderColor: ["rgb(48, 123, 140)"],
               borderWidth: 1,
             },
           ],

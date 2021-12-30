@@ -12,19 +12,21 @@
       </div>
       <div class="row">
         <div class="col-md-12 mt-4">
-          <h3>Other Network interface</h3>
+          <h3>Network interface</h3>
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">pid</th>
-                <th scope="col">Name</th>
-                <th scope="col">Usage (%)</th>
+                <th scope="col">interface</th>
+                <th scope="col">inputBytes</th>
+                <th scope="col">outputBytes</th>
               </tr>
             </thead>
             <tbody>
-              <!-- <tr v-for="item in tabledata"  v-bind:key="item.id">
-                  <td>{{ item.comment }}</td>
-                </tr> -->
+              <tr v-for="item in tabledata"  v-bind:key="item.id">
+                  <td>{{ item.interface}}</td>
+                  <td>{{ item.inputBytes }}</td>
+                  <td>{{ item.outputBytes }}</td>
+                </tr>
             </tbody>
           </table>
         </div>
@@ -59,7 +61,6 @@ export default {
 
       //데이터 넣기
       this.tabledata = getdata.data.netstatus;
-      console.log(this.tabledata);
       
       //배열 데이터 넣기
       if (!(count >= 6)) {
