@@ -1,8 +1,8 @@
 {
   "name": "server-dashboard",
   "version": "0.1.0",
-  "author": "INMD1 <lyw514549@gmail.com> (https://github.com/INMD1/server-dashboard)",
   "private": true,
+  "author": "INMD1 <lyw514549@gmail.com> (https://github.com/INMD1/server-dashboard)",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -19,10 +19,10 @@
     "axios": "^0.24.0",
     "bootstrap": "^5.1.3",
     "chart.js": "^3.7.0",
-    "core-js": "^3.6.5",
+    "core-js": "^3.20.1",
     "electron": "^16.0.5",
     "electron-builder": "^22.14.5",
-    "vue": "^3.0.0",
+    "vue": "^2.6.14",
     "vue-chartjs": "^3.5.1",
     "vue-router": "^4.0.0-0",
     "vue-sweetalert2": "^5.0.2"
