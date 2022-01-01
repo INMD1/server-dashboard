@@ -13,7 +13,7 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    //fullscreen: true,
+    fullscreen: true,
     webPreferences: {
       
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -24,6 +24,8 @@ async function createWindow() {
     }
   })
   
+  win.webContents.openDevTools()
+  
   win.setMenu(null)
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -33,8 +35,8 @@ async function createWindow() {
   } else {
     createProtocol('app')
     // Load the index.html when not in development
-    win.loadURL('app://./index.html')
-  }
+    win.loadURL('file://' + __dirname + '/index.html')
+      }
 }
 
 // Quit when all windows are closed.

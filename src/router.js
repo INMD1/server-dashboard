@@ -1,8 +1,8 @@
-import { createWebHistory, createRouter } from 'vue-router';
-import main from './view/index.vue'
-import see_more_cpu from './view/see_more_cpu'
-import see_more_ram from './view/see_more_ram'
-import see_more_network from './view/see_more_nework'
+import { createWebHistory, createRouter, createWebHashHistory } from 'vue-router';
+import main from './view/index.vue';
+import see_more_cpu from './view/see_more_cpu.vue';
+import see_more_ram from './view/see_more_ram.vue';
+import see_more_network from './view/see_more_nework.vue';
 const routes = [
     {
       path: '/',
@@ -26,8 +26,8 @@ const routes = [
     }
   ];
 
-  export const router = createRouter({
-    history: createWebHistory(),
+  const router = createRouter({
+    history: process.env.IS_ELECTRON ? createWebHashHistory() : createWebHistory(),
     routes,
   });
 
