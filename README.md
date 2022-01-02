@@ -59,6 +59,5 @@ yarn build
 yarn lint
 ```
 
-### Customize configuration![147842629-4c7d9720-920c-480b-9bcd-35bdadd3c168](https://user-images.githubusercontent.com/87979171/147842651-75a23332-d9c2-46cf-8db5-3f4939e36b82.png)
-
+### Customize configuration!
 See [Configuration Reference](https://cli.vuejs.org/config/).
