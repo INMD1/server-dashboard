@@ -9,9 +9,11 @@
 https://github.com/INMD1/computerapi 이 레포를 서버에 복사를 한다음<br>
 `npm i`를 해서 라이브러리 설치를 해주고 `npm start`해주세요.
 
-### 2. 앱에 연동하기(베티)
+### 2. 앱에 연동하기(베타)
 그다음은 콘솔에 앱으로 실행하고 싶으면`npm run electron:serve`를 웹으로 실행하고 싶으면
 `npm run serve`로 해주세요.
+
+(앱같은 경우에는 기본적으로 풀스크린 뜨게 되어 있기때문에 background.js에서 안하고 싶으면 fullscreen: true를 제거 해주세요)
 
 #### 🙋‍♂️ Q:웹호스팅을 했을때 다른 컴퓨터에서 계속 새로 입력해달라고 떠요
   제가 만든앱은 window.localStorag을 이용해서 저장하기 때문에 계속 뜰수 있서요.<br>
@@ -38,26 +40,7 @@ http://blog.powerinmd.com/categories/#server-dashobard-dev
   </tbody>
 </table>
 
-#프로젝트 빌드 해보기
-## Project setup
-```
-yarn install
-```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
 
 ### Customize configuration!
 See [Configuration Reference](https://cli.vuejs.org/config/).
