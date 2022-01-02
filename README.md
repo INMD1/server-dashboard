@@ -13,6 +13,7 @@ https://github.com/INMD1/computerapi 이 레포를 서버에 복사를 한다음
 그다음은 콘솔에 앱으로 실행하고 싶으면`npm run electron:serve`를 웹으로 실행하고 싶으면
 `npm run serve`로 해주세요.
 
+지금은 앱을 빌드 해놔서 릴리즈가서 설치를 해주세요!
 (앱같은 경우에는 기본적으로 풀스크린 뜨게 되어 있기때문에 background.js에서 안하고 싶으면 fullscreen: true를 제거 해주세요)
 
 #### 🙋‍♂️ Q:웹호스팅을 했을때 다른 컴퓨터에서 계속 새로 입력해달라고 떠요
