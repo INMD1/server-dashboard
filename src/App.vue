@@ -5,23 +5,11 @@
     </nav>
     <div class="row">
       <div class="flex-shrink-0 p-3 bg-white" style="width: 220px">
-        <a
-          href="/"
-          class="
-            d-flex
-            align-items-center
-            pb-3
-            mb-3
-            link-dark
-            text-decoration-none
-            border-bottom
-          "
-        >
+        <router-link to="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
           <svg class="bi me-2" width="30" height="24">
-            <use xlink:href="#bootstrap" />
           </svg>
           <span class="fs-5 fw-semibold">Server-Dashboard</span>
-        </a>
+        </router-link>
         <ul class="list-unstyled ps-0">
           <li class="mb-1">
             <button
@@ -35,16 +23,16 @@
             <div class="collapse show" id="home-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <div v-html="htmlReturningFn"></div>
-                <li><a href="/" class="link-dark rounded">Status</a></li>
-                <li><a href="/more/cpu" class="link-dark rounded">Cpu</a></li>
+                <li><router-link to="/" class="link-dark rounded">Status</router-link></li>
+                <li><router-link  to="/more/cpu" class="link-dark rounded">Cpu</router-link ></li>
                 <li>
-                  <a href="/more/ram" class="link-dark rounded"
-                    >RAM</a
+                  <router-link  to="/more/ram" class="link-dark rounded"
+                    >RAM</router-link 
                   >
                 </li>
                 <li>
-                  <a href="/more/network" class="link-dark rounded"
-                    >Network</a
+                  <router-link to="/more/network" class="link-dark rounded"
+                    >Network</router-link
                   >
                 </li>
               </ul>
@@ -145,13 +133,13 @@ export default {
         },
       });
     },
-    nonono(){
+    nonono() {
       this.$swal(
         "error!",
         "아직 제작중이에요... 잠시만 기다려주세요!",
         "error"
-      )
-    }
+      );
+    },
   },
   //페이지 로드되자 마자 하는 것
   async mounted() {
@@ -169,46 +157,46 @@ export default {
             return "아직 데이터가 입력안된거 같해요!";
           } else {
             window.localStorage.setItem("adress", value);
-                this.$swal(
-                  "저장완료되었습니다!",
-                  "3초뒤에 페이지 리로드 됨니다!",
-                  "success"
-                );
+            this.$swal(
+              "저장완료되었습니다!",
+              "3초뒤에 페이지 리로드 됨니다!",
+              "success"
+            );
             setTimeout(() => this.$router.go(), 3000);
           }
         },
       });
-    } 
+    }
     if (window.localStorage.getItem("adress") != null) {
-    //데이터를 5초방식으로 데이터 리로드 함
-    let check = 0;
-    setInterval(async () => {
-      try {
-        await axios.get(window.localStorage.getItem("adress"));
-        if (check == 1) {
+      //데이터를 5초방식으로 데이터 리로드 함
+      let check = 0;
+      setInterval(async () => {
+        try {
+          await axios.get(window.localStorage.getItem("adress"));
+          if (check == 1) {
+            this.$notify({
+              type: "success",
+              title: "서버가 정상적으로 다시연결됨",
+              text:
+                "다시 정상적으로 서버가 연결되었습니다." +
+                "\n\nDate: " +
+                new Date(),
+            });
+            check = 0;
+          }
+        } catch (error) {
+          console.log("test");
           this.$notify({
-            type: "success",
-            title: "서버가 정상적으로 다시연결됨",
+            type: "error",
+            title: "서버 연결에 문제가 생김",
             text:
-              "다시 정상적으로 서버가 연결되었습니다." +
+              "현재 서버하고 통신이 안됨니다.\n서버의 상태를 점검해 주십시오." +
               "\n\nDate: " +
               new Date(),
           });
-          check = 0;
+          check = 1;
         }
-      } catch (error) {
-        console.log("test");
-        this.$notify({
-          type: "error",
-          title: "서버 연결에 문제가 생김",
-          text:
-            "현재 서버하고 통신이 안됨니다.\n서버의 상태를 점검해 주십시오." +
-            "\n\nDate: " +
-            new Date(),
-        });
-        check = 1;
-      }
-    }, 5000);
+      }, 5000);
     }
   },
 };
