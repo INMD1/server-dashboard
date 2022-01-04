@@ -78,8 +78,7 @@
       </div>
       <div class="col-sm-8">
         <!--라우터 넣는 부분 -->
-        <router-view />
-      </div>
+      <router-view :key="$route.fullPath"></router-view>      </div>
     </div>
   </div>
   <notifications position="bottom left" />
@@ -117,10 +116,9 @@ export default {
                 window.localStorage.setItem("adress", value);
                 this.$swal(
                   "저장완료되었습니다!",
-                  "3초뒤에 페이지 리로드 됨니다!",
+                  "",
                   "success"
                 );
-                setTimeout(() => this.$router.go(), 3000);
               } else {
                 this.$swal(
                   "취소되었습니다.",
@@ -159,10 +157,9 @@ export default {
             window.localStorage.setItem("adress", value);
             this.$swal(
               "저장완료되었습니다!",
-              "3초뒤에 페이지 리로드 됨니다!",
+              "",
               "success"
             );
-            setTimeout(() => this.$router.go(), 3000);
           }
         },
       });
