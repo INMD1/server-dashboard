@@ -105,7 +105,7 @@ export default {
           } else {
             this.$swal({
               title: "정말로 변경할건가요?",
-              text: "계속 진행하면 앱을 재부팅이 됨니다.",
+              text: "계속 진행하면 기존에 저장한 데이터를 덮습니다!",
               icon: "warning",
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
