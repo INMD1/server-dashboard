@@ -38,24 +38,6 @@
               </ul>
             </div>
           </li>
-          <li class="mb-1">
-            <button
-              class="btn btn-toggle align-items-center rounded collapsed"
-              data-bs-toggle="collapse"
-              data-bs-target="#dashboard-collapse"
-              aria-expanded="false"
-            >
-              Power
-            </button>
-            <div class="collapse" id="dashboard-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li>
-                  <a @click="nonono" class="link-dark rounded">On/off</a>
-
-                </li>
-              </ul>
-            </div>
-          </li>
           <li class="border-top my-3"></li>
           <li class="mb-1">
             <button
