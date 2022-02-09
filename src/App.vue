@@ -57,6 +57,7 @@
             </div>
           </li>
         </ul>
+        <p style="font-size: 10px"> app verison: {{this.verison}}</p>
       </div>
       <div class="col-sm-8">
         <!--라우터 넣는 부분 -->
@@ -71,6 +72,11 @@ import axios from "axios";
 export default {
   name: "App",
   components: {},
+  data() {
+    return {
+      verison: "none"
+    }
+  },
   //버튼 활성화 메서드 저장하는 곳
   methods: {
     ipediton() {
@@ -123,6 +129,9 @@ export default {
   },
   //페이지 로드되자 마자 하는 것
   async mounted() {
+    const ver = await axios.get("https://api.github.com/repos/INMD1/server-dashboard/releases")
+    this.verison = ver.data[0].tag_name;
+
     //로컬스토리지에 데이터가 있는지 확인
     if (window.localStorage.getItem("adress") == null) {
       this.$swal({
