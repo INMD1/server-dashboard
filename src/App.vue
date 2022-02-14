@@ -56,8 +56,11 @@
               </ul>
             </div>
           </li>
+          <!--제작자 간단한 설명 첨부 하는 곳-->
+          <li class="border-top my-3"></li>
+          <p style="font-size: 11px;">Made by: INMD1</p>
+           <p style="font-size: 11px;"> app verison: Beta 0.1.2</p>
         </ul>
-        <p style="font-size: 10px"> app verison: {{this.verison}}</p>
       </div>
       <div class="col-sm-8">
         <!--라우터 넣는 부분 -->
