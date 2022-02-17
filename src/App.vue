@@ -1,3 +1,19 @@
+<!--
+    추가 개발 해야할것
+    1. windows Localstroge json 생성하기(성공) -> url 판독기 만들기
+    2. 그걸 이용해서 위에 상단바에서 만든 셀렉트 바에 json 데이터 로드하기
+    3. 선택 바에서 선택시 재부팅을 할지 아니면 다른 방법으로 바뀌는지 확인하기
+
+    <json 양식>
+    [
+      {
+      site: "test.com"
+      see: false
+      },,,,,
+      more data
+    ]
+    이렇게 해야 나중에 관리가 편함
+-->
 <template>
   <div class="container-fluid">
     <nav class="navbar navbar-light bg-white">
@@ -11,6 +27,14 @@
           <span class="fs-5 fw-semibold">Server-Dashboard</span>
         </router-link>
         <ul class="list-unstyled ps-0">
+        <select v-model="selected" class="form-select form-select-sm">
+          <option selected>localhost.com</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <span>선택함: {{ this.selected }}</span>
+        <li class="border-top my-3"></li>
           <li class="mb-1">
             <button
               class="btn btn-toggle align-items-center rounded collapsed"
@@ -51,20 +75,20 @@
             <div class="collapse" id="dashboard-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                  <a @click="ipediton" class="link-dark rounded">ip_edit</a>
+                  <a @click="ipediton" class="link-dark rounded">server add</a>
                 </li>
               </ul>
             </div>
           </li>
           <!--제작자 간단한 설명 첨부 하는 곳-->
           <li class="border-top my-3"></li>
-          <p style="font-size: 11px;">Made by: INMD1</p>
-           <p style="font-size: 11px;"> app verison: Beta 0.1.2</p>
+          <p style="font-size: 11px;">Made by: INMD1<br>app verison: Beta 0.1.2</p>
         </ul>
       </div>
       <div class="col-sm-8">
         <!--라우터 넣는 부분 -->
-      <router-view :key="$route.fullPath"></router-view>      </div>
+      <router-view :key="$route.fullPath"></router-view>
+      </div>
     </div>
   </div>
   <notifications position="bottom left" />
@@ -77,15 +101,18 @@ export default {
   components: {},
   data() {
     return {
-      verison: "none"
+      verison: "none",
+      selected: '',
+      siteapi: []
     }
   },
   //버튼 활성화 메서드 저장하는 곳
   methods: {
+    //버튼 누를때 나오는 이벤트
     ipediton() {
       this.$swal({
-        title: "변경할 주소 또는 ip 넣어주세요.",
-        text: "참 앞에 http:// 나 https://를 넣어주세요!",
+        title: "서버 추가(저장)",
+        text: "데시보드에 서버를 추가 할거면 아래에 있는 입력바에 주소를 넣어주세요.",
         icon: "question",
         input: "text",
         inputPlaceholder: "ex) http://0.0.0.0, http://example.com",
@@ -95,8 +122,7 @@ export default {
             return "You need to write something!";
           } else {
             this.$swal({
-              title: "정말로 변경할건가요?",
-              text: "계속 진행하면 기존에 저장한 데이터를 덮습니다!",
+              title: "정말로 저장할건가요?",
               icon: "warning",
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
@@ -104,7 +130,11 @@ export default {
               confirmButtonText: "YES!",
             }).then((result) => {
               if (result.isConfirmed) {
-                window.localStorage.setItem("adress", value);
+                //localStorage 추가 함
+                //추후 나중에 url 판독하는 코드 추가 예정
+                let jsontemp = JSON.parse(window.localStorage.getItem("adress"));
+                jsontemp.push({site: value , see: false })
+                window.localStorage.setItem("adress", jsontemp);
                 this.$swal(
                   "저장완료되었습니다!",
                   "",
@@ -113,7 +143,7 @@ export default {
               } else {
                 this.$swal(
                   "취소되었습니다.",
-                  "아무것도 변경되지 않았습니다.",
+                  "아무것도 저장하지 않았서요.",
                   "error"
                 );
               }
@@ -121,18 +151,13 @@ export default {
           }
         },
       });
-    },
-    nonono() {
-      this.$swal(
-        "error!",
-        "아직 제작중이에요... 잠시만 기다려주세요!",
-        "error"
-      );
-    },
+    }
   },
-  //페이지 로드되자 마자 하는 것
+  //페이지 로드되자 마자 하는 것(또는 반복함수 시작)
   async mounted() {
-    const ver = await axios.get("https://api.github.com/repos/INMD1/server-dashboard/releases")
+    //시작하자 실행하는 코드
+    this.siteapi = JSON.parse(window.location.setItem('adress'));
+    const ver = await axios.get("https://api.github.com/repos/INMD1/server-dashboard/releases");
     this.verison = ver.data[0].tag_name;
 
     //로컬스토리지에 데이터가 있는지 확인
@@ -147,8 +172,8 @@ export default {
         inputValidator: (value) => {
           if (!value) {
             return "아직 데이터가 입력안된거 같해요!";
-          } else {
-            window.localStorage.setItem("adress", value);
+          }else {
+            window.localStorage.setItem("adress", JSON.stringify([{site: value , see: true }]));
             this.$swal(
               "저장완료되었습니다!",
               "",
@@ -176,7 +201,6 @@ export default {
             check = 0;
           }
         } catch (error) {
-          console.log("test");
           this.$notify({
             type: "error",
             title: "서버 연결에 문제가 생김",
