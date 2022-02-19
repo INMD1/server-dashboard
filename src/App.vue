@@ -27,13 +27,12 @@
           <span class="fs-5 fw-semibold">Server-Dashboard</span>
         </router-link>
         <ul class="list-unstyled ps-0">
-        <select v-model="selected" class="form-select form-select-sm">
-          <option selected>localhost.com</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+        <select v-model="selected" @change="onChange($event)" class="form-select form-select-sm">
+          <option selected>{{ this.selected }}</option>
+          <option v-for="item in siteapi" :key="item">
+            {{ item.site }}
+          </option>
         </select>
-        <span>선택함: {{ this.selected }}</span>
         <li class="border-top my-3"></li>
           <li class="mb-1">
             <button
@@ -108,6 +107,9 @@ export default {
   },
   //버튼 활성화 메서드 저장하는 곳
   methods: {
+    onChange(event) {
+            console.log(event.target.value)
+    },
     //버튼 누를때 나오는 이벤트
     ipediton() {
       this.$swal({
@@ -156,12 +158,47 @@ export default {
   //페이지 로드되자 마자 하는 것(또는 반복함수 시작)
   async mounted() {
     //시작하자 실행하는 코드
-    this.siteapi = JSON.parse(window.location.setItem('adress'));
+    this.siteapi = JSON.parse(window.localStorage.getItem('adress'));
     const ver = await axios.get("https://api.github.com/repos/INMD1/server-dashboard/releases");
     this.verison = ver.data[0].tag_name;
 
-    //로컬스토리지에 데이터가 있는지 확인
-    if (window.localStorage.getItem("adress") == null) {
+    try {
+      for (let index = 0; index < this.siteapi.length; index++) {
+        if(this.siteapi[index].see == true){
+          window.localStorage.setItem("url", this.siteapi[index].site);
+          this.selected = window.localStorage.getItem("url");
+        }
+      }
+       //데이터를 5초방식으로 데이터 리로드 함
+        let check = 0;
+        setInterval(async () => {
+          try {
+            await axios.get(window.localStorage.getItem("url"));
+            if (check == 1) {
+              this.$notify({
+                type: "success",
+                title: "서버가 정상적으로 다시연결됨",
+                text:
+                  "다시 정상적으로 서버가 연결되었습니다." +
+                  "\n\nDate: " +
+                  new Date(),
+              });
+              check = 0;
+            }
+          } catch (error) {
+            this.$notify({
+              type: "error",
+              title: "서버 연결에 문제가 생김",
+              text:
+                "현재 서버하고 통신이 안됨니다.\n서버의 상태를 점검해 주십시오." +
+                "\n\nDate: " +
+                new Date(),
+            });
+            check = 1;
+          }
+        }, 5000);
+    } catch (error) {
+      console.log(error);
       this.$swal({
         title: "안녕하세요!",
         text: "처음 오시는거 같해요. 아래에 ip나 도메인을 입력해서 저장해주세요!",
@@ -181,37 +218,7 @@ export default {
             );
           }
         },
-      });
-    }
-    if (window.localStorage.getItem("adress") != null) {
-      //데이터를 5초방식으로 데이터 리로드 함
-      let check = 0;
-      setInterval(async () => {
-        try {
-          await axios.get(window.localStorage.getItem("adress"));
-          if (check == 1) {
-            this.$notify({
-              type: "success",
-              title: "서버가 정상적으로 다시연결됨",
-              text:
-                "다시 정상적으로 서버가 연결되었습니다." +
-                "\n\nDate: " +
-                new Date(),
-            });
-            check = 0;
-          }
-        } catch (error) {
-          this.$notify({
-            type: "error",
-            title: "서버 연결에 문제가 생김",
-            text:
-              "현재 서버하고 통신이 안됨니다.\n서버의 상태를 점검해 주십시오." +
-              "\n\nDate: " +
-              new Date(),
-          });
-          check = 1;
-        }
-      }, 5000);
+      }); 
     }
   },
 };

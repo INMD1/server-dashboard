@@ -66,7 +66,7 @@ export default {
           today.getMinutes() +
           ":" +
           today.getSeconds();
-        const getdata = await axios.get(window.localStorage.getItem("adress"));
+        const getdata = await axios.get(window.localStorage.getItem("url"));
 
         let num = getdata.data.cpu.usage;
 

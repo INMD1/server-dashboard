@@ -111,7 +111,7 @@ export default {
     };
   },
   async mounted() {
-    const getdata = await axios.get(window.localStorage.getItem("adress"));
+    const getdata = await axios.get(window.localStorage.getItem("url"));
     this.model = getdata.data.cpu.model;
 
     //CPU모델 판독하기
@@ -124,7 +124,7 @@ export default {
     }
 
     setInterval(async () => {
-        const getdata = await axios.get(window.localStorage.getItem("adress"));
+        const getdata = await axios.get(window.localStorage.getItem("url"));
         let today = new Date();
         let gettime = (today.getHours()+":"+today.getMinutes()+":"+today.getSeconds());
 

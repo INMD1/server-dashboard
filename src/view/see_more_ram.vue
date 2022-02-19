@@ -48,7 +48,7 @@ export default {
         //초기작업
         let today = new Date();
         let gettime = (today.getHours()+":"+today.getMinutes()+":"+today.getSeconds());
-        const getdata = await axios.get(window.localStorage.getItem("adress"));
+        const getdata = await axios.get(window.localStorage.getItem("url"));
         
         //데이터 넣기
         this.totalMemMb = getdata.data.ram.totalMemMb;

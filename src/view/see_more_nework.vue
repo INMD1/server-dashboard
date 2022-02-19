@@ -57,7 +57,7 @@ export default {
       let today = new Date();
       let gettime =
         today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      const getdata = await axios.get(window.localStorage.getItem("adress"));
+      const getdata = await axios.get(window.localStorage.getItem("url"));
 
       //데이터 넣기
       this.tabledata = getdata.data.netstatus;
