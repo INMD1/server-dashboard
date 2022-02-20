@@ -108,7 +108,15 @@ export default {
   //버튼 활성화 메서드 저장하는 곳
   methods: {
     onChange(event) {
-            console.log(event.target.value)
+        this.$notify({
+            type: "warring",
+            title: "서버가 변경됨",
+            text:
+            event.target.value + "으로 변경되었습니다." +
+            "\n\nDate: " +
+            new Date(),
+          });
+        window.localStorage.setItem("url",event.value.event);
     },
     //버튼 누를때 나오는 이벤트
     ipediton() {
@@ -163,12 +171,7 @@ export default {
     this.verison = ver.data[0].tag_name;
 
     try {
-      for (let index = 0; index < this.siteapi.length; index++) {
-        if(this.siteapi[index].see == true){
-          window.localStorage.setItem("url", this.siteapi[index].site);
-          this.selected = window.localStorage.getItem("url");
-        }
-      }
+        this.selected = window.localStorage.getItem("url");
        //데이터를 5초방식으로 데이터 리로드 함
         let check = 0;
         setInterval(async () => {
@@ -210,7 +213,8 @@ export default {
           if (!value) {
             return "아직 데이터가 입력안된거 같해요!";
           }else {
-            window.localStorage.setItem("adress", JSON.stringify([{site: value , see: true }]));
+            window.localStorage.setItem("adress", JSON.stringify([{site: value}]));
+            this.selected = window.localStorage.setItem("url",value);
             this.$swal(
               "저장완료되었습니다!",
               "",
