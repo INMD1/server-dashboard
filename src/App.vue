@@ -107,17 +107,17 @@ export default {
   },
   //버튼 활성화 메서드 저장하는 곳
   methods: {
+    //서버 선택하면 일어나는 이벤트
     onChange(event) {
-        this.$notify({
-            type: "warring",
-            title: "서버가 변경됨",
-            text:
-            event.target.value + "으로 변경되었습니다." +
-            "\n\nDate: " +
-            new Date(),
-          });
-        window.localStorage.setItem("url",event.value.event);
-        this.$router.go(); // 페이지 새로고침
+      this.$notify({
+          type: "warring",
+          title: "서버가 변경됨",
+          text: event.target.value + "으로 변경되었습니다." +
+          "\n\nDate: " +
+          new Date(),
+      });
+      window.localStorage.setItem("url",event.value.event);
+      this.$router.go(); // 페이지 새로고침
     },
     //버튼 누를때 나오는 이벤트
     ipediton() {
@@ -198,6 +198,7 @@ export default {
           }
         }, 5000);
     }else{
+      // 아무것도 데이터가 저장되지 않는 경우
       this.$swal({
         title: "안녕하세요!",
         text: "처음 오시는거 같해요. 아래에 ip나 도메인을 입력해서 저장해주세요!",
