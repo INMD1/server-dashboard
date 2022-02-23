@@ -81,7 +81,7 @@
           </li>
           <!--제작자 간단한 설명 첨부 하는 곳-->
           <li class="border-top my-3"></li>
-          <p style="font-size: 11px;">Made by: INMD1<br>app verison: Beta 0.1.2</p>
+          <p style="font-size: 11px;">Made by: INMD1<br>app verison: 0.1.2</p>
         </ul>
       </div>
       <div class="col-sm-8">
@@ -117,6 +117,7 @@ export default {
             new Date(),
           });
         window.localStorage.setItem("url",event.value.event);
+        this.$router.go(); // 페이지 새로고침
     },
     //버튼 누를때 나오는 이벤트
     ipediton() {
@@ -129,7 +130,7 @@ export default {
         showCloseButton: true,
         inputValidator: (value) => {
           if (!value) {
-            return "You need to write something!";
+            return "아직데이터가 입력 안한거 같해요";
           } else {
             this.$swal({
               title: "정말로 저장할건가요?",
@@ -144,18 +145,16 @@ export default {
                 //추후 나중에 url 판독하는 코드 추가 예정
                 let jsontemp = JSON.parse(window.localStorage.getItem("adress"));
                 jsontemp.push({site: value , see: false })
-                window.localStorage.setItem("adress", jsontemp);
+                localStorage.setItem("adress",JSON.stringify(jsontemp));
                 this.$swal(
                   "저장완료되었습니다!",
                   "",
                   "success"
-                );
+                ).then((result) => {
+                  //확인하면 페이지를 리로드함
+                  if(result.isConfirmed){this.$router.go();}});
               } else {
-                this.$swal(
-                  "취소되었습니다.",
-                  "아무것도 저장하지 않았서요.",
-                  "error"
-                );
+                this.$swal("취소되었습니다.","아무것도 저장하지 않았서요.","error");
               }
             });
           }
@@ -168,8 +167,7 @@ export default {
     //시작하자 실행하는 코드
     const ver = await axios.get("https://api.github.com/repos/INMD1/server-dashboard/releases");
     this.verison = ver.data[0].tag_name;
-
-    if(localStorage.getItem('url') === undefined || null){
+    if(localStorage.getItem('url') != undefined || null){
         this.siteapi = JSON.parse(localStorage.getItem('adress'));
         this.selected = localStorage.getItem("url");
        //데이터를 5초방식으로 데이터 리로드 함
@@ -181,8 +179,7 @@ export default {
               this.$notify({
                 type: "success",
                 title: "서버가 정상적으로 다시연결됨",
-                text:
-                  "다시 정상적으로 서버가 연결되었습니다." +
+                text: "다시 정상적으로 서버가 연결되었습니다." +
                   "\n\nDate: " +
                   new Date(),
               });
@@ -214,11 +211,11 @@ export default {
           }else {
             window.localStorage.setItem("adress", JSON.stringify([{site: value}]));
             this.selected = window.localStorage.setItem("url",value);
-            this.$swal(
-              "저장완료되었습니다!",
-              "",
-              "success"
-            );
+            this.$swal("저장완료되었습니다!","", "success"
+            ).then((result) => {
+              //확인하면 페이지를 리로드함
+              if(result.isConfirmed){ this.$router.go();}
+            });
           }
         },
       }); 
