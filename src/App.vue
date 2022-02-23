@@ -1,18 +1,5 @@
 <!--
     추가 개발 해야할것
-    1. windows Localstroge json 생성하기(성공) -> url 판독기 만들기
-    2. 그걸 이용해서 위에 상단바에서 만든 셀렉트 바에 json 데이터 로드하기
-    3. 선택 바에서 선택시 재부팅을 할지 아니면 다른 방법으로 바뀌는지 확인하기
-
-    <json 양식>
-    [
-      {
-      site: "test.com"
-      see: false
-      },,,,,
-      more data
-    ]
-    이렇게 해야 나중에 관리가 편함
 -->
 <template>
   <div class="container-fluid">
@@ -40,23 +27,17 @@
               data-bs-toggle="collapse"
               data-bs-target="#home-collapse"
               aria-expanded="true"
-            >
-              Dashboard
-            </button>
+            >Dashboard</button>
             <div class="collapse show" id="home-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <div v-html="htmlReturningFn"></div>
                 <li><router-link to="/" class="link-dark rounded">Status</router-link></li>
                 <li><router-link  to="/more/cpu" class="link-dark rounded">Cpu</router-link ></li>
                 <li>
-                  <router-link  to="/more/ram" class="link-dark rounded"
-                    >RAM</router-link 
-                  >
+                  <router-link  to="/more/ram" class="link-dark rounded">RAM</router-link >
                 </li>
                 <li>
-                  <router-link to="/more/network" class="link-dark rounded"
-                    >Network</router-link
-                  >
+                  <router-link to="/more/network" class="link-dark rounded">Network</router-link>
                 </li>
               </ul>
             </div>
@@ -73,9 +54,8 @@
             </button>
             <div class="collapse" id="dashboard-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li>
-                  <a @click="ipediton" class="link-dark rounded">server add</a>
-                </li>
+                <li><a @click="ipediton" class="link-dark rounded">server add</a></li>
+                <li><a @click="reset" class="link-dark rounded">Reset</a></li>
               </ul>
             </div>
           </li>
@@ -113,8 +93,7 @@ export default {
           type: "warring",
           title: "서버가 변경됨",
           text: event.target.value + "으로 변경되었습니다." +
-          "\n\nDate: " +
-          new Date(),
+          "\n\nDate: " + new Date(),
       });
       window.localStorage.setItem("url",event.value.event);
       this.$router.go(); // 페이지 새로고침
@@ -160,13 +139,33 @@ export default {
           }
         },
       });
+    },
+    reset() {
+      this.$swal({
+        title: "초기화",
+        text: "모든 데이터를 초기화하고 원래 초기상태로 돌아갑니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "YES!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$swal("초기화를 완료 했습니다.","","success"
+          ).then((result) => {
+            //확인하면 페이지를 리로드함
+            if(result.isConfirmed){
+              localStorage.removeItem('adress');
+              localStorage.removeItem('url');
+              this.$router.go();
+            }});
+        }
+      });
     }
   },
   //페이지 로드되자 마자 하는 것(또는 반복함수 시작)
   async mounted() {
     //시작하자 실행하는 코드
-    const ver = await axios.get("https://api.github.com/repos/INMD1/server-dashboard/releases");
-    this.verison = ver.data[0].tag_name;
     if(localStorage.getItem('url') != undefined || null){
         this.siteapi = JSON.parse(localStorage.getItem('adress'));
         this.selected = localStorage.getItem("url");
