@@ -166,17 +166,17 @@ export default {
   //페이지 로드되자 마자 하는 것(또는 반복함수 시작)
   async mounted() {
     //시작하자 실행하는 코드
-    this.siteapi = JSON.parse(window.localStorage.getItem('adress'));
     const ver = await axios.get("https://api.github.com/repos/INMD1/server-dashboard/releases");
     this.verison = ver.data[0].tag_name;
 
-    try {
-        this.selected = window.localStorage.getItem("url");
+    if(localStorage.getItem('url') === undefined || null){
+        this.siteapi = JSON.parse(localStorage.getItem('adress'));
+        this.selected = localStorage.getItem("url");
        //데이터를 5초방식으로 데이터 리로드 함
         let check = 0;
         setInterval(async () => {
           try {
-            await axios.get(window.localStorage.getItem("url"));
+            await axios.get(localStorage.getItem("url"));
             if (check == 1) {
               this.$notify({
                 type: "success",
@@ -200,8 +200,7 @@ export default {
             check = 1;
           }
         }, 5000);
-    } catch (error) {
-      console.log(error);
+    }else{
       this.$swal({
         title: "안녕하세요!",
         text: "처음 오시는거 같해요. 아래에 ip나 도메인을 입력해서 저장해주세요!",
