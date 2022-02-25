@@ -61,7 +61,7 @@
           </li>
           <!--제작자 간단한 설명 첨부 하는 곳-->
           <li class="border-top my-3"></li>
-          <p style="font-size: 11px;">Made by: INMD1<br>app verison: 0.1.2</p>
+          <p style="font-size: 11px;">Made by: INMD1<br>app verison: 0.1.2<br><br>⚠️그래프가 안나오면 로고를 눌려주세요</p>
         </ul>
       </div>
       <div class="col-sm-8">
