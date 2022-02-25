@@ -1,30 +1,32 @@
 <template>
-  <div class="row">
-    <div class="col-6">
-      <div class="p-3">
-        <h1 style="text-align: left">CPU</h1>
-        <cpustatus :cpudata="cpudata" ref="cpustatus" />
+  <div class="py-5 h-100 align-items-center text-center">
+    <div class="row">
+      <div class="col-6">
+        <div class="p-3">
+          <h1 style="text-align: left">CPU</h1>
+          <cpustatus :cpudata="cpudata" ref="cpustatus" />
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="p-3">
+          <h1 style="text-align: left">RAM</h1>
+          <ramstatus :Ramchart="Ramchart" ref="ramstatus" />
+          <br />
+        </div>
       </div>
     </div>
-    <div class="col-6">
-      <div class="p-3">
-        <h1 style="text-align: left">RAM</h1>
-        <ramstatus :Ramchart="Ramchart" ref="ramstatus" />
-        <br />
-      </div>
+    <div class="row">
+      <networkstatus
+        :networkin="networkin"
+        :networkout="networkout"
+        :Datetime="Datetime"
+        ref="networkstatus"
+      />
     </div>
   </div>
-  <div class="row">
-    <networkstatus
-      :networkin="networkin"
-      :networkout="networkout"
-      :Datetime="Datetime"
-      ref="networkstatus"
-    />
-  </div>
-  <br>
-  <br>
-  <br>
+  <br />
+  <br />
+  <br />
 </template>
 
 <script>
@@ -50,7 +52,7 @@ export default {
       networkout: [0, 0, 0, 0, 0, 0],
       Datetime: [0, 0, 0, 0, 0, 0],
       chartOptions: [],
-      };
+    };
   },
   async mounted() {
     //this.timer = 50;
@@ -58,9 +60,14 @@ export default {
       try {
         //시간
         let today = new Date();
-        let gettime = (today.getHours()+":"+today.getMinutes()+":"+today.getSeconds());
-        const getdata = await axios.get(window.localStorage.getItem("adress"));
-  
+        let gettime =
+          today.getHours() +
+          ":" +
+          today.getMinutes() +
+          ":" +
+          today.getSeconds();
+        const getdata = await axios.get(window.localStorage.getItem("url"));
+
         let num = getdata.data.cpu.usage;
 
         //cpudata_전처리
