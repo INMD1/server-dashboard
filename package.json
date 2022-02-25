@@ -1,6 +1,6 @@
 {
   "name": "server-dashboard",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "author": "INMD1 <lyw514549@gmail.com> (https://github.com/INMD1/server-dashboard)",
   "scripts": {
